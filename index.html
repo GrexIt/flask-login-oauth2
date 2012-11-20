@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Flask-login-oauth2 by GrexIt</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Flask-login-oauth2</h1>
+        <p>flask-login-oauth2 and google oauth2 library</p>
+
+        <p class="view"><a href="https://github.com/GrexIt/flask-login-oauth2">View the Project on GitHub <small>GrexIt/flask-login-oauth2</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/GrexIt/flask-login-oauth2/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/GrexIt/flask-login-oauth2/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/GrexIt/flask-login-oauth2">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>Flask-Login-Oauth2</h1>
+
+<h2>Installation</h2>
+
+<p><code>$ pip install -r requirements.txt</code></p>
+
+<p><code>flask-login-oauth2</code> and google oauth2 library for authenticating users through New Google Oauth2 mechanism and maintaining session for users</p>
+
+<p>Just register your new Google app at <a href="https://code.google.com/apis/console#access">https://code.google.com/apis/console#access</a>
+and copy <code>settings-sample.py</code> to <code>settings.py</code> and modifiy <code>GOOGLE_CLIENT_ID</code> , <code>GOOGLE_CLIENT_SECRET</code>,
+<code>REDIRECT_URI</code> and <code>SECRET_KEY</code></p>
+
+<p>run the server</p>
+
+<pre><code>$python server.py
+Running on http://127.0.0.1:5000/
+</code></pre>
+
+<p>Register a new user also login in if the user exists
+<a href="http://127.0.0.1:5000/login?email=anurag@grexit.com">http://127.0.0.1:5000/login?email=anurag@grexit.com</a></p>
+
+<p>It uses the following scopes:</p>
+
+<pre><code>https://mail.google.com/
+</code></pre>
+
+<p>To Get all Access to the Gmail Imap server of the user</p>
+
+<pre><code>https://www.googleapis.com/auth/userinfo.profile
+</code></pre>
+
+<p>To Get Access to the User Profile</p>
+
+<p>Read More About Scopes here at <a href="https://developers.google.com/gdata/faq#AuthScopes">https://developers.google.com/gdata/faq#AuthScopes</a></p>
+
+<p>It also saves the accesstoken which can be used to get userinfo</p>
+
+<p>GET <a href="https://www.googleapis.com/oauth2/v1/userinfo?access_token=%7BaccessToken%7D">https://www.googleapis.com/oauth2/v1/userinfo?access_token={accessToken}</a></p>
+
+<p>To Logout
+<a href="http://127.0.0.1:5000/logout">http://127.0.0.1:5000/logout</a></p>
+
+<h2>Flask-Login Reference</h2>
+
+<p><a href="http://packages.python.org/Flask-Login/">http://packages.python.org/Flask-Login/</a></p>
+
+<h2>Google Oauth2 Library Reference</h2>
+
+<p><a href="https://developers.google.com/accounts/docs/OAuth2Login">https://developers.google.com/accounts/docs/OAuth2Login</a></p>
+
+<p><a href="https://developers.google.com/api-client-library/python/guide/aaa_oauth">https://developers.google.com/api-client-library/python/guide/aaa_oauth</a></p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/GrexIt">GrexIt</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
