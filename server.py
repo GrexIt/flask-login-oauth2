@@ -3,11 +3,13 @@
 
 import json
 import requests
-from flask import request, redirect
+from flask import Flask, request, redirect
 from flask.ext.login import (LoginManager, current_user, login_required,
                              login_user, logout_user, UserMixin, AnonymousUser)
 
-from modules import app
+
+app = Flask(__name__, instance_relative_config=True)
+app.config.from_pyfile('settings.py')
 
 
 class User(UserMixin):
