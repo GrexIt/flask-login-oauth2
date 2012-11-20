@@ -1,0 +1,3 @@
+*.py[cox]
+settings.py
+instance/settings.py
