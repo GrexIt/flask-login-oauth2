@@ -6,5 +6,3 @@
     :copyright: (c) 2012 by GrexIt.
     :license: BSD, see LICENSE for more details.
 """
-
-
