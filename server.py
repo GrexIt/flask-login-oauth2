@@ -84,7 +84,8 @@ def login():
                 return "user already exists and logged in"
 
     if request.method == "GET" and request.args.get('email', ''):
-        url = GeneratePermissionUrl(app.config['GOOGLE_CLIENT_ID'], request.args.get('email', ''))
+        url = GeneratePermissionUrl(app.config['GOOGLE_CLIENT_ID'], request.args.get('email', ''),
+            redirect_uri=app.config['REDIRECT_URI'], google_account_base_url=app.config['GOOGLE_ACCOUNTS_BASE_URL'])
         return redirect(url)
     return "No Email Provided"
 
@@ -97,7 +98,9 @@ def oauth2callback():
         useremail = request.args.get('state', '')
         response = AuthorizeTokens(app.config['GOOGLE_CLIENT_ID'],
                                    app.config['GOOGLE_CLIENT_SECRET'],
-                                   authorizationcode)
+                                   authorizationcode,
+                                   redirect_uri=app.config['REDIRECT_URI'],
+                                   google_account_base_url=app.config['GOOGLE_ACCOUNTS_BASE_URL'])
         accesstoken = response["access_token"]
         r = requests.get('https://www.googleapis.com/oauth2/v1/userinfo?access_token=' + accesstoken)
         j = json.loads(r.text)
@@ -108,6 +111,7 @@ def oauth2callback():
         options["firstname"] = j.get("given_name")
         options["lastname"] = j.get("family_name")
         options["accesstoken"] = accesstoken
+        userid = options['userid']
         u = User(options.get("email"), userid, options.get("firstname"), options.get("lastname"), accesstoken)
         USERS[userid] = u
         loginit = login_user(u, remember="yes")

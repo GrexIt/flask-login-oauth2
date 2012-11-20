@@ -3,10 +3,10 @@ Flask-Login-Oauth2
 
 Installation
 -------
-$ pip install -r requirements.txt
+`$ pip install -r requirements.txt`
 
 
-flask-login-oauth2 and google oauth2 library for authenticating users through New Google Oauth2 mechanism and maintaining session for users
+`flask-login-oauth2` and google oauth2 library for authenticating users through New Google Oauth2 mechanism and maintaining session for users
 
 Just register your new Google app at https://code.google.com/apis/console#access
 and copy `settings-sample.py` to `settings.py` and modifiy `GOOGLE_CLIENT_ID` , `GOOGLE_CLIENT_SECRET`,

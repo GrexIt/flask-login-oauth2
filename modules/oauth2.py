@@ -68,8 +68,6 @@ import smtplib
 import sys
 import urllib
 
-from modules import app
-
 
 def SetupOptionParser():
     # Usage message is the module's docstring.
@@ -118,7 +116,7 @@ def SetupOptionParser():
     return parser
 
 
-def AccountsUrl(command):
+def AccountsUrl(google_account_base_url, command):
     """Generates the Google Accounts URL.
 
     Args:
@@ -127,7 +125,7 @@ def AccountsUrl(command):
     Returns:
       A URL for the given command.
     """
-    return '%s/%s' % (app.config['GOOGLE_ACCOUNTS_BASE_URL'], command)
+    return '%s/%s' % (google_account_base_url, command)
 
 
 def UrlEscape(text):
@@ -155,8 +153,8 @@ def FormatUrlParams(params):
     return '&'.join(param_fragments)
 
 
-def GeneratePermissionUrl(client_id, useremail,
-    scope='https://mail.google.com/ https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email'):
+def GeneratePermissionUrl(client_id, useremail, redirect_uri, google_account_base_url,
+    scope='https://mail.google.com/ https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email',):
     """Generates the URL for authorizing access.
 
     This uses the "OAuth2 for Installed Applications" flow described at
@@ -170,15 +168,15 @@ def GeneratePermissionUrl(client_id, useremail,
     """
     params = {}
     params['client_id'] = client_id
-    params['redirect_uri'] = app.config['REDIRECT_URI']
+    params['redirect_uri'] = redirect_uri
     params['scope'] = scope
     params['state'] = useremail
     params['response_type'] = 'code'
-    return '%s?%s' % (AccountsUrl('o/oauth2/auth'),
+    return '%s?%s' % (AccountsUrl(google_account_base_url=google_account_base_url, command='o/oauth2/auth'),
                     FormatUrlParams(params))
 
 
-def AuthorizeTokens(client_id, client_secret, authorization_code):
+def AuthorizeTokens(client_id, client_secret, authorization_code, redirect_uri, google_account_base_url):
     """Obtains OAuth access token and refresh token.
 
     This uses the application portion of the "OAuth2 for Installed Applications"
@@ -197,15 +195,15 @@ def AuthorizeTokens(client_id, client_secret, authorization_code):
     params['client_id'] = client_id
     params['client_secret'] = client_secret
     params['code'] = authorization_code
-    params['redirect_uri'] = app.config['REDIRECT_URI']
+    params['redirect_uri'] = redirect_uri
     params['grant_type'] = 'authorization_code'
-    request_url = AccountsUrl('o/oauth2/token')
+    request_url = AccountsUrl(command='o/oauth2/token', google_account_base_url=google_account_base_url)
 
     response = urllib.urlopen(request_url, urllib.urlencode(params)).read()
     return json.loads(response)
 
 
-def RefreshToken(client_id, client_secret, refresh_token):
+def RefreshToken(client_id, client_secret, refresh_token, google_account_base_url):
     """Obtains a new token given a refresh token.
 
     See https://developers.google.com/accounts/docs/OAuth2InstalledApp#refresh
@@ -223,7 +221,7 @@ def RefreshToken(client_id, client_secret, refresh_token):
     params['client_secret'] = client_secret
     params['refresh_token'] = refresh_token
     params['grant_type'] = 'refresh_token'
-    request_url = AccountsUrl('o/oauth2/token')
+    request_url = AccountsUrl(command='o/oauth2/token', google_account_base_url=google_account_base_url)
 
     response = urllib.urlopen(request_url, urllib.urlencode(params)).read()
     return json.loads(response)
@@ -294,7 +292,7 @@ def main(argv):
     if options.refresh_token:
         RequireOptions(options, 'client_id', 'client_secret')
         response = RefreshToken(options.client_id, options.client_secret,
-                            options.refresh_token)
+                            options.refresh_token, options.google_account_base_url)
         print 'Access Token: %s' % response['access_token']
         print 'Access Token Expiration Seconds: %s' % response['expires_in']
     elif options.generate_oauth2_string:
