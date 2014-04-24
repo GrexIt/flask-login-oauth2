@@ -1,5 +1,6 @@
 #! /usr/bin/env python
 #! -*- coding: utf-8 -*-
+# This Library combines Google Oauth and User management 
 
 import json
 import requests
@@ -11,7 +12,7 @@ from flask.ext.login import (LoginManager, current_user, login_required,
 app = Flask(__name__, instance_relative_config=True)
 app.config.from_pyfile('settings.py')
 
-
+# User base class
 class User(UserMixin):
     """User Session management Class
     """
@@ -118,6 +119,8 @@ def oauth2callback():
         if loginit == True:
             return "Everything happened Successfullly"
         return "Some Problem happened"
+    else:
+        return "Ony POST requests are allowed"                                 
 
 login_manager = LoginManager()
 login_manager.init_app(app)
