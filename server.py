@@ -6,7 +6,7 @@ import json
 import requests
 from flask import Flask, request, redirect
 from flask.ext.login import (LoginManager, current_user, login_required,
-                             login_user, logout_user, UserMixin, AnonymousUser)
+                             login_user, logout_user, UserMixin, AnonymousUserMixin)
 
 
 app = Flask(__name__, instance_relative_config=True)
@@ -52,7 +52,7 @@ USER_NAMES maintains a dictionary of all the users with their email address
 USER_NAMES = dict((u.email, u) for u in USERS.itervalues())
 
 
-class Anonymous(AnonymousUser):
+class Anonymous(AnonymousUserMixin):
     name = u"Anonymous"
 
 
