@@ -1,3 +1,6 @@
 *.py[cox]
 settings.py
 instance/settings.py
+
+# Ignoring the system files
+.DS_Store
